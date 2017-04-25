@@ -5,6 +5,7 @@
 
 class Array
   def sum
+    inject {|sum, n| sum += n} || 0
   end
 end
 
@@ -16,9 +17,11 @@ end
 
 class Array
   def square!
+    map! {|x| x * x}
   end
 
   def square
+    map {|x| x * x}
   end
 end
 
@@ -36,6 +39,11 @@ end
 
 class Array
   def my_uniq
+    nums = []
+    self.each do |i|
+      nums << i unless nums.include?(i)
+    end
+    nums
   end
 end
 
@@ -56,7 +64,15 @@ end
 # * `[0, 1]` before `[0, 2]` (then smaller second elements come first)
 
 class Array
-  def two_sum
+    def two_sum
+      pair = []
+      self.each_index do |i|
+        (i + 1...self.count).each do |j|
+          pair << [i, j] if self[i] + self[j] == 0
+      end
+    end
+
+    pair
   end
 end
 
@@ -69,6 +85,17 @@ end
 
 class Array
   def median
+    n = self.length
+  	arr = self.sort
+    median = 0
+    if n < 1
+      median = nil
+    elsif (n % 2 == 0)
+      median = (arr[n/2 - 1] + arr[n/2])/(2.0)
+    else
+      median = arr[n/2]
+    end
+    median
   end
 end
 
@@ -121,6 +148,19 @@ end
 
 class Array
   def my_transpose
+    new_array = []
+    i = 0
+    while i < self.length
+      j = 0
+      row = []
+      while j < self[i].length
+        row << self[j][i]
+        j += 1
+      end
+      new_array << row
+      i += 1
+    end
+    new_array
   end
 end
 
